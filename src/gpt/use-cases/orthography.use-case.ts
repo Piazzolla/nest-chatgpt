@@ -32,7 +32,7 @@ export const orthographyCheckUseCase = async( openai:OpenAI, options: Options) =
     ],
         temperature: 0.5,
         max_tokens: 150,
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
       });
     
       console.log(completion);

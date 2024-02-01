@@ -2,23 +2,28 @@ import OpenAI from "openai";
 
 interface Options {
     prompt: string;
+    lang: string;
 }
 
-export const prosConsDiscusserUseCase = async( openai:OpenAI, options: Options) => {
-    const { prompt } = options; 
+export const translateUseCase = async( openai:OpenAI, options: Options) => {
+    const { prompt, lang } = options; 
     console.log(prompt);
     const completion = await openai.chat.completions.create({
         messages: [{ 
             role: "system", 
             content: `
-            Se te dará una pregunta y tu tarea es dar una respuesta con pros y contras,
-            la respuesta debe de ser en formato markdown,
-            los pros y contras deben de estar en una lista,           
+            Se te dará un lenguaje 'lang' y un texto y deberás traducir el texto al lenguaje provisto.
+            La respuesta deberá ser solo el texto traducido.           
             `  
         },
         {
             role:"user",
             content: prompt,
+            
+        },
+        {
+            role: "user",
+            content: lang
         }
     ],
         temperature: 0.8,

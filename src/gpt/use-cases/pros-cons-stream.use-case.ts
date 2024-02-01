@@ -23,7 +23,7 @@ export const prosConsDiscusserStreamUseCase = async( openai:OpenAI, options: Opt
     ],
         temperature: 0.3,
         max_tokens: 500,
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
         stream: true //CON ESTO DEVUELVE UN STREAM F
       });
     

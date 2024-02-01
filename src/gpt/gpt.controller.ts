@@ -1,6 +1,6 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { GptService } from './gpt.service';
-import { OrthographyDto } from './dtos';
+import { OrthographyDto, TranslateDto } from './dtos';
 import { ProsConsDto } from './dtos/pros-cons.dto';
 import { Response } from 'express';
 
@@ -36,6 +36,14 @@ export class GptController {
       res.write(piece);
     }
     res.end();
+  }
+
+
+  @Post('translate')
+  translate(
+    @Body() translateDto: TranslateDto,
+  ) {
+    return this.gptService.translate(translateDto);
   }
 
 }

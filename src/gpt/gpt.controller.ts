@@ -3,7 +3,7 @@ import { GptService } from './gpt.service';
 import { OrthographyDto, TextToAudioDto, TranslateDto } from './dtos';
 import { ProsConsDto } from './dtos/pros-cons.dto';
 import type { Response } from 'express';
-import * as path from 'path';
+
 
 @Controller('gpt')
 export class GptController {
@@ -64,7 +64,7 @@ export class GptController {
     @Param('fileId') id: string
   ) {
 
-    const filePath = path.resolve(__dirname,`../../generated/audios/${id}.mp3`)   // await this.gptService.getAudioFromFS(fileId)
+    const filePath = this.gptService.getAudioFromId(id);
     res.setHeader('Content-Type', 'audio/mp3');
     res.status(HttpStatus.OK);
     res.sendFile(filePath);

@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as sharp from 'sharp';
 
-export const downloadImageAsPng =async (url:string) => {
+export const downloadImageAsPng =async (url:string, fullPath: boolean = false) => {
     const response = await fetch(url);
     if( !response.ok ) {
         throw new InternalServerErrorException('Image download was not possible')
@@ -22,12 +22,14 @@ export const downloadImageAsPng =async (url:string) => {
         .ensureAlpha()
         .toFile(completePath)
 
+    if( fullPath )
+        return completePath;
     return imageNamePng;
 
     
 }
 
-export const downloadBase64ImageAsPng = async (base64Image: string) => {
+export const downloadBase64ImageAsPng = async (base64Image: string, fullPath: boolean = false) => {
 
     // Remover encabezado
     base64Image = base64Image.split(';base64,').pop();
@@ -45,6 +47,8 @@ export const downloadBase64ImageAsPng = async (base64Image: string) => {
       .ensureAlpha()
       .toFile(path.join(folderPath, imageNamePng));
   
+    if( fullPath )
+      return path.join(folderPath, imageNamePng);
     return imageNamePng; // path.join(folderPath, imageNamePng);
   
   }

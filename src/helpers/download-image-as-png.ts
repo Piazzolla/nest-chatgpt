@@ -1,6 +1,7 @@
 import { InternalServerErrorException } from "@nestjs/common";
 import * as path from 'path';
 import * as fs from 'fs';
+import * as sharp from 'sharp';
 
 export const downloadImageAsPng =async (url:string) => {
     const response = await fetch(url);
@@ -12,6 +13,16 @@ export const downloadImageAsPng =async (url:string) => {
     fs.mkdirSync(folderPath, { recursive: true });
     const imageNamePng = `${ new Date().getTime()}.png`; //TODO: deberia usar uuid o algo para generar ids
     const buffer = Buffer.from( await response.arrayBuffer() );
-    fs.writeFileSync( `${ folderPath }/${ imageNamePng }`, buffer)
+    //fs.writeFileSync( `${ folderPath }/${ imageNamePng }`, buffer)
+    
+    const completePath = path.join(folderPath, imageNamePng);
+
+    await sharp( buffer )
+        .png()
+        .ensureAlpha()
+        .toFile(completePath)
+
+    return completePath;
+
     
 }

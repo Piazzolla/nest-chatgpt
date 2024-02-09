@@ -22,7 +22,8 @@ export const imageVariationUseCase = async (openai: OpenAI, options: Options) =>
 
 
     const fileName = await downloadImageAsPng( response.data[0].url, false);
-    const url = `${process.env.SERVER_URL}/gpt/image-variation/${fileName}`
+    const bareFilename = fileName.split('.').shift();
+    const url = `${process.env.SERVER_URL}/gpt/image/${bareFilename}`
 
 
     return {

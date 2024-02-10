@@ -50,7 +50,8 @@ export const imageGenerationUseCase =async (openai:OpenAI, options: Options) => 
     });
 
     const fileName = await downloadImageAsPng( response.data[0].url);
-    const url = `${process.env.SERVER_URL}/gpt/generate-image/${fileName}`
+    const bareFilename = fileName.split('.').shift();
+    const url = `${process.env.SERVER_URL}/gpt/image/${bareFilename}`
 
     return {
         url: url,
